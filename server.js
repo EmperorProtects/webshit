@@ -1,18 +1,18 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
-
+const path = require('path');
 const app = express();
-app.use(cors());
-app.use(express.static('public'));
-app.use(express.json());
+const port = 3000;
 
-app.get('/hello', async (req, res) => {
-  try {
-    const response = "Hello World!";
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch weather data' });
-  }
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/static', express.static(path.join(__dirname, 'mychat')));
+
+app.get('/hello', (req, res) => {
+  res.send('Hello World');
+});
+
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
